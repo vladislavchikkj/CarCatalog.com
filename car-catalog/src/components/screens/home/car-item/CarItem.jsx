@@ -1,6 +1,7 @@
 import PropTypes from "prop-types"
 import { Link } from "react-router-dom"
 import styles from "../Home.module.css"
+import Price from "./Price"
 
 function CarItem({ car }) {
   return (
@@ -13,13 +14,7 @@ function CarItem({ car }) {
       ></div>
       <div className={styles.info}>
         <h2>{car.name}</h2>
-        <p>
-          {new Intl.NumberFormat("ru-Ru", {
-            style: "currency",
-            currency: "USD",
-            currencyDisplay: "narrowSymbol",
-          }).format(car.price)}
-        </p>
+        <Price price={car.price}></Price>
         <Link className="btn" to={`/car/${car.id}`}>
           Read more
         </Link>
