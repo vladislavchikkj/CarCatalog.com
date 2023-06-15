@@ -1,52 +1,44 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useState } from "react"
+import { useForm } from "react-hook-form"
+import { CarService } from "../../../../services/car.service"
 import styles from "./CreateCar.module.css"
 
-const clearData = {
-  price: "",
-  name: "",
-  image: "",
-}
-
 // eslint-disable-next-line react/prop-types
-const CreateCarForm = ({ setCars }) => {
-  const [data, setData] = useState(clearData)
+const CreateCarForm = () => {
+  const [data] = useState()
 
-  const createCar = (e) => {
-    e.preventDefault()
-    setCars((prev) => [
-      {
-        id: prev.length + 1,
-        ...data,
+  const { register, reset, handleSubmit } = useForm({
+    mode: "onChange",
+    defaultValues: data,
+  })
+
+  const queryClient = useQueryClient()
+
+  const { mutate } = useMutation(
+    ["create car"],
+    (data) => CarService.create(data),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("cars")
+        reset()
       },
-      ...prev,
-    ])
-    setData(clearData)
+      onError: (error) => {
+        console.log(error)
+      },
+    }
+  )
+  const createCar = (data) => {
+    console.log(data)
+    mutate(data)
   }
   return (
-    <form className={styles.form}>
-      <input
-        placeholder="Name"
-        onChange={(e) => setData((prev) => ({ ...prev, name: e.target.value }))}
-        value={data.name}
-      />
-      <input
-        placeholder="Price"
-        onChange={(e) =>
-          setData((prev) => ({ ...prev, price: e.target.value }))
-        }
-        value={data.price}
-      />
-      <input
-        placeholder="Image"
-        onChange={(e) =>
-          setData((prev) => ({ ...prev, image: e.target.value }))
-        }
-        value={data.image}
-      />
+    <form className={styles.form} onSubmit={handleSubmit(createCar)}>
+      <input placeholder="Name" {...register("name", { required: true })} />
+      <input placeholder="Price" {...register("price", { required: true })} />
+      <input placeholder="Image" {...register("image", { required: true })} />
 
-      <button className="btn" onClick={(e) => createCar(e)}>
-        Create
-      </button>
+      <button className="btn">Create</button>
     </form>
   )
 }

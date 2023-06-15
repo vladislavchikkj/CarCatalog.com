@@ -1,21 +1,15 @@
 import CreateCarForm from "./create-car-form/CreateCarForm"
 import CarItem from "./car-item/CarItem.jsx"
-import { useContext, useEffect, useState } from "react"
+import { useContext } from "react"
 import { CarService } from "../../../services/car.service"
 import { AuthContext } from "../../../providers/AuthProvider"
+import { useQuery } from "@tanstack/react-query"
 
 function Home() {
-  const [cars, setCars] = useState([])
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await CarService.getAll()
-      setCars(data)
-    }
-    fetchData()
-  }, [])
-
   const { user, setUser } = useContext(AuthContext)
+  const { data, isLoading } = useQuery(["cars"], () => CarService.getAll())
+
+  if (isLoading) return <p>Loading...</p>
 
   return (
     <div>
@@ -38,10 +32,15 @@ function Home() {
         </button>
       )}
 
-      <CreateCarForm setCars={setCars} />
+      <CreateCarForm />
       <div>
-        {cars.length ? (
-          cars.map((car) => <CarItem key={car.id} car={car} />)
+        {data.length ? (
+          data.map((car) => {
+            if (car.name && car.image && car.price) {
+              return <CarItem key={car.id} car={car} />
+            }
+            return null
+          })
         ) : (
           <p>There are no cars</p>
         )}

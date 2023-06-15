@@ -26,7 +26,7 @@ CarItem.propTypes = {
   car: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
+    price: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
   }).isRequired,
 }
