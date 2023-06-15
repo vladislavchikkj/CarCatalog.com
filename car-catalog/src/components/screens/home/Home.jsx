@@ -15,23 +15,22 @@ function Home() {
     fetchData()
   }, [])
 
-  const {user, setUser} = useContext(AuthContext)
+  const { user, setUser } = useContext(AuthContext)
 
   return (
     <div>
       <h1>Cars catalog</h1>
 
       {user ? (
-      <>
-        <h2>
-          welcome, {user.name}!
-        </h2>
-        <button onClick={() => setUser(null)}>logout</button>
-      </>
+        <>
+          <h2>welcome, {user.name}!</h2>
+          <button onClick={() => setUser(null)}>logout</button>
+        </>
       ) : (
-            <button onClick={() => 
-              setUser({
-                name: 'Max',
+        <button
+          onClick={() =>
+            setUser({
+              name: "Vlad",
             })
           }
         >
@@ -49,6 +48,6 @@ function Home() {
       </div>
     </div>
   )
-};
+}
 
 export default Home

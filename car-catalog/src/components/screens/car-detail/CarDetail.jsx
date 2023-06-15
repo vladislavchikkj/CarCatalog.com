@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
+import { withAuth } from "../../../HOC/withAuth"
 import { CarService } from "../../../services/car.service"
 import CarItem from "../home/car-item/CarItem"
 
+// eslint-disable-next-line react-refresh/only-export-components
 const CarDetail = () => {
   const { id } = useParams()
   const [car, setCar] = useState({})
@@ -27,4 +29,5 @@ const CarDetail = () => {
   )
 }
 
-export default CarDetail
+// eslint-disable-next-line react-refresh/only-export-components
+export default withAuth(CarDetail)

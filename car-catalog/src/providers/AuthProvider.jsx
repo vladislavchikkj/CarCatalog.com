@@ -1,14 +1,13 @@
-import {createContext, useState} from 'react'
+import { createContext, useState } from "react"
 
 export const AuthContext = createContext()
 
-const AuthProvider = ({children}) => {
-
-    const [user,Setuser] = useState(null)
-
+// eslint-disable-next-line react/prop-types
+const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null)
 
   return (
-    <AuthContext.Provider value={{user, Setuser}}>
+    <AuthContext.Provider value={{ user, setUser }}>
       {children}
     </AuthContext.Provider>
   )
