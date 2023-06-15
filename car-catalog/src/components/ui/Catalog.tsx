@@ -1,7 +1,13 @@
 /* eslint-disable react/prop-types */
+import { FC } from "react"
+import { ICar } from "../../types/car.interface"
 import CarItem from "../screens/home/car-item/CarItem"
 
-const Catalog = ({ data }) => {
+interface ICatalog {
+  data?: ICar[]
+}
+
+const Catalog: FC<ICatalog> = ({ data = [] }) => {
   return (
     <div>
       {data.length ? (

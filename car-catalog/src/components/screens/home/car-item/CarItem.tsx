@@ -2,8 +2,9 @@ import PropTypes from "prop-types"
 import { Link } from "react-router-dom"
 import styles from "../Home.module.css"
 import Price from "./Price"
+import { ICar } from "../../../../types/car.interface"
 
-function CarItem({ car }) {
+function CarItem({ car }: { car: ICar }) {
   return (
     <div key={car.id} className={styles.item}>
       <div
